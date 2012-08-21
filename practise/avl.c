@@ -38,28 +38,10 @@ int searchElem(AVLTree *t,int value)
 	return bReturn;
 };
 
-Node* copyNode(Node *t)
-{
-	Node *n = (Node*)malloc(sizeof(Node));
-	if(n == NULL)
-	{
-		printf("out of memory!");
-		exit(0);
-	}
-	n->bf = t->bf;
-	n->val = t->val;
-	n->lc = t->lc;
-	n->rc = t->rc;
-
-	return n;
-}
-
 Node* LL(Node* t)
 {
 	Node *n = t->lc;
-	t->lc->bf = 0;
-	t->bf = 0;
-	n->lc->bf = 0;
+	t->lc->bf = t->bf = n->lc->bf = 0;
 	t->lc = n->rc;
 	n->rc = t;
 	return n;
@@ -94,9 +76,7 @@ Node* LR(Node* t)
 Node* RR(Node *t)
 {
 	Node *n = t->rc;
-	n->bf = 0;
-	t->bf = 0;
-	n->rc->bf = 0;
+	n->bf = t->bf = n->rc->bf = 0;
 	t->rc = n->lc;
 	n->lc = t;
 	return n;
